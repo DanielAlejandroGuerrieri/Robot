@@ -27,6 +27,7 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
 
     var posicionInicial = [0, 0];
     var posicionActual = posicionInicial;
+    var posicionMaxima = [0, 0]; //inicializo la posicionMaxima al valor de posicionInicial
 
 
     //ingreso a una variable las coordenadas de obstaculos y luego los movimientos
@@ -70,24 +71,34 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
         }
 
     }
-    var distancia = [];
+
 
     function mayorDistancia() {
-        let posicionAnterior = posicionActual;
+        let temporal = [];
         for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 2; j++) {
-
+            if (posicionActual[i] < 0) {
+                temporal[i] = posicionActual[i] + -1;
             }
-
+            if (posicionActual[i] >= posicionMaxima[i]) {
+                posicionMaxima[i] = posicionActual[i];
+            }
         }
+        console.log('la posicion Maxima es: ' + posicionMaxima);
+    }
 
+    function calcularMaximaDistancia() {
+        let x = Math.pow(posicionMaxima[0], 2);
+        let y = Math.pow(posicionMaxima[1], 2);
+        let distancia = Math.sqrt(x + y);
+        distancia = Number(distancia.toFixed(2));
+        return distancia;
     }
 
     function moverRobot(pasos) {
         let nuevaPosicion = []; //temporal
         let choco = false;
         for (let i = 1;
-            (i <= pasos) || (choco === true); i++) {
+            (i <= pasos) && (choco === false); i++) {
             for (let j = 0; j < posicionActual.length; j++) {
                 nuevaPosicion[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
             }
@@ -101,12 +112,8 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
         posicionActual = nuevaPosicion;
     }
 
-
-
-
     function hayObstaculo(posicion) {
         for (let i = 0; i < obstaculos.length; i++) {
-
             if (posicion[0] == obstaculos[i][0]) {
                 if (posicion[1] == obstaculos[i][1]) {
                     console.log('choco');
@@ -122,6 +129,7 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
             case 'M':
                 let pasos = parseInt(mover[1]);
                 moverRobot(pasos);
+                mayorDistancia();
                 break;
             case 'L':
                 direccion('L');
@@ -136,5 +144,6 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
 
     });
     console.log('esta es la posicion final: ' + posicionActual);
+    console.log('La distancia maxima alcanzada es: ' + calcularMaximaDistancia() + ' unidades');
 
 });
