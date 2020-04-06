@@ -46,7 +46,6 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
     for (let j = cantObstaculos.length + 1; j < arrayDatos.length; j++) {
         movimientos.push(arrayDatos[j].split(' '));
     }
-    //console.log(movimientos);
 
     function direccion(caso) {
         switch (orientacion) {
@@ -71,26 +70,38 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
         }
 
     }
+    var distancia = [];
+
+    function mayorDistancia() {
+        let posicionAnterior = posicionActual;
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+
+            }
+
+        }
+
+    }
 
     function moverRobot(pasos) {
         let nuevaPosicion = []; //temporal
         let choco = false;
-
         for (let i = 1;
             (i <= pasos) || (choco === true); i++) {
             for (let j = 0; j < posicionActual.length; j++) {
                 nuevaPosicion[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
             }
-            if (hayObstaculo(nuevaPosicion)) {
-                choco = true;
-                return;
-            }
-
+        }
+        if (hayObstaculo(nuevaPosicion)) {
+            choco = true;
+            return;
         }
         console.log('este valor es del antes de chocar: ' + posicionActual);
         console.log('este valor es del nuevaPosicion: ' + nuevaPosicion);
         posicionActual = nuevaPosicion;
     }
+
+
 
 
     function hayObstaculo(posicion) {
@@ -124,8 +135,6 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
         }
 
     });
-
-    console.log('valor de los obstaculos: ' + obstaculos);
     console.log('esta es la posicion final: ' + posicionActual);
 
 });
