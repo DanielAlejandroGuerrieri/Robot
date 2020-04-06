@@ -1,23 +1,22 @@
-function moverRobot1(pasos) {
-    let array = []; //temporal
-    //let choco = false;
+function moverRobot(pasos) {
+    let nuevaPosicion = []; //temporal
+    let choco = false;
 
-    //if (choco === false) {
-    for (let i = 0; i < pasos; i++) {
-        if (hayObstaculo(array)) {
+    for (let i = 0;
+        (i <= pasos) || (choco === true); i++) {
+        for (let j = 0; j < posicionActual.length; j++) {
+            nuevaPosicion[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
+        }
+
+
+        if (hayObstaculo(nuevaPosicion)) {
             choco = true;
             return;
         }
-        for (let j = 0; j < posicionActual.length; j++) {
-            array[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
-        }
-
-        //  }
-        posicionActual = antesDeChocar;
     }
-    console.log('este valor es del array: ' + array);
-    console.log('este valor es del antes de chocar: ' + antesDeChocar);
-    posicionActual = array;
+    console.log('este valor es del antes de chocar: ' + posicionActual);
+    console.log('este valor es del nuevaPosicion: ' + nuevaPosicion);
+    posicionActual = nuevaPosicion;
 }
 
 function hayObstaculo(posicion) {

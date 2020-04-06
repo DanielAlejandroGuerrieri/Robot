@@ -4,7 +4,6 @@ var fs = require('fs'),
     path = require('path'),
     filePath = path.join('../comandos.txt');
 
-//controller = require('../controllers/controller')
 let arrayDatos = [];
 
 fs.readFile(filePath, 'utf-8', function(err, data) {
@@ -13,15 +12,11 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
     //realizo la descomposicion del texto a un array dividido por los saltos de linea
     arrayDatos = data.split('\r\n');
 
-    //controller.cargaDatos(arrayDatos);
-
-
     //cargo la cantidad de obstaculos extraidos de la entrada
     var cantObstaculos = arrayDatos[0][0];
     var obstaculos = [];
 
     // cargo la cantidad de movimientos extraidos de la entrada
-    var cantMovimientos = arrayDatos[0][1];
     var movimientos = [];
 
     var norte = [0, 1];
@@ -77,92 +72,36 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
 
     }
 
-
-
     function moverRobot(pasos) {
-        for (let i = 0; i < posicionActual.length; i++) {
-
-            if (obstaculos === posicionActual) {
-                console.log('hay un obstaculo');
-                return
-            }
-            posicionActual.forEach((orientacion[i] * pasos));
-            console.log(posicionActual);
-        }
-    }
-
-    function moverRobot1(pasos) {
-        let array = [];
+        let nuevaPosicion = []; //temporal
         let choco = false;
-        if (choco === false) {
 
-            for (let i = 0; i <= pasos; i++) {
-
-                var antesDeChocar = array;
-
-                if (hayObstaculo(array)) {
-                    choco = true;
-                    return;
-                } else {
-
-                    for (let j = 0; j < posicionActual.length; j++) {
-
-                        array[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
-
-                    }
-                }
-
+        for (let i = 1;
+            (i <= pasos) || (choco === true); i++) {
+            for (let j = 0; j < posicionActual.length; j++) {
+                nuevaPosicion[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
             }
-            posicionActual = antesDeChocar;
-        }
-        console.log('este valor es del array: ' + array);
-
-        console.log('este valor es del antes de chocar: ' + antesDeChocar);
-        posicionActual = array;
-
-        /*
-        
-        console.log(posicionActual);
-
-            if (posicionActual == obstaculos[0]) {
-                console.log('choco');
-                posicionActual = array;
-                return
+            if (hayObstaculo(nuevaPosicion)) {
+                choco = true;
+                return;
             }
-        
-        let cantidad = 0;
-        let posicion = [];
-        for (let i = 0; i < pasos; i++) {
-            cantidad++;
-            posicion = posicionActual[j] + orientacion[j] * cantidad;
-            
+
         }
-
-        posicion = posicionActual;*/
-
+        console.log('este valor es del antes de chocar: ' + posicionActual);
+        console.log('este valor es del nuevaPosicion: ' + nuevaPosicion);
+        posicionActual = nuevaPosicion;
     }
-
 
 
     function hayObstaculo(posicion) {
-        //console.log(obstaculos.indexOf(posicionActual));
-
         for (let i = 0; i < obstaculos.length; i++) {
-            //for (let j = 0; j < posicion.length; j++) {
 
-            /*if (obstaculos[i][j] === posicion[j]) {
-                console.log('hay obstaculo');
-                return true;
-            }
-            */
             if (posicion[0] == obstaculos[i][0]) {
                 if (posicion[1] == obstaculos[i][1]) {
                     console.log('choco');
-                    // posicionActual = antesDeSumar;
                     return true;
                 }
             }
-            //}
         }
         return false;
     }
@@ -171,7 +110,7 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
         switch (mover[0]) {
             case 'M':
                 let pasos = parseInt(mover[1]);
-                moverRobot1(pasos);
+                moverRobot(pasos);
                 break;
             case 'L':
                 direccion('L');
