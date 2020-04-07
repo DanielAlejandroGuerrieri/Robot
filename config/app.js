@@ -96,13 +96,13 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
         let futuraPosicion = []; //temporal
         let choco = false;
         for (var i = 1; i <= pasos; i++) {
-            futuraPosicion = sumarPasos(i + 1);
+            futuraPosicion = sumarPasos(i);
             if (hayObstaculo(futuraPosicion)) {
                 choco = true;
                 break;
             }
         }
-        if (choco) { posicionActual = sumarPasos(i); } else { posicionActual = sumarPasos(pasos); }
+        posicionActual = choco ? sumarPasos(i - 1) : sumarPasos(pasos);
     }
 
     function sumarPasos(cantidad) {
