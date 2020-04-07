@@ -29,9 +29,7 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
     var posicionActual = posicionInicial;
     var posicionMaxima = [0, 0]; //inicializo la posicionMaxima al valor de posicionInicial
 
-
     //ingreso a una variable las coordenadas de obstaculos y luego los movimientos
-
     for (let i = 1; i <= cantObstaculos; i++) {
         let arrayInt = [];
         let arrayString = arrayDatos[i].split(' ');
@@ -72,18 +70,18 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
 
     }
 
-
     function mayorDistancia() {
         let temporal = [];
         for (let i = 0; i < 2; i++) {
             if (posicionActual[i] < 0) {
-                temporal[i] = posicionActual[i] + -1;
+                temporal[i] = posicionActual[i] * -1;
             }
             if (posicionActual[i] >= posicionMaxima[i]) {
                 posicionMaxima[i] = posicionActual[i];
+            } else if (temporal[i] >= posicionMaxima[i]) {
+                posicionMaxima[i] = temporal[i];
             }
         }
-        console.log('la posicion Maxima es: ' + posicionMaxima);
     }
 
     function calcularMaximaDistancia() {
@@ -95,28 +93,30 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
     }
 
     function moverRobot(pasos) {
-        let nuevaPosicion = []; //temporal
+        let futuraPosicion = []; //temporal
         let choco = false;
-        for (let i = 1;
-            (i <= pasos) && (choco === false); i++) {
-            for (let j = 0; j < posicionActual.length; j++) {
-                nuevaPosicion[j] = posicionActual[j] + orientacion[j] * i; //posicionActual=[0,0]>[0,1]
+        for (var i = 1; i <= pasos; i++) {
+            futuraPosicion = sumarPasos(i + 1);
+            if (hayObstaculo(futuraPosicion)) {
+                choco = true;
+                break;
             }
         }
-        if (hayObstaculo(nuevaPosicion)) {
-            choco = true;
-            return;
+        if (choco) { posicionActual = sumarPasos(i); } else { posicionActual = sumarPasos(pasos); }
+    }
+
+    function sumarPasos(cantidad) {
+        let posicion = [];
+        for (let j = 0; j < posicionActual.length; j++) {
+            posicion[j] = posicionActual[j] + orientacion[j] * cantidad; //posicionActual=[0,0]>[0,1]
         }
-        console.log('este valor es del antes de chocar: ' + posicionActual);
-        console.log('este valor es del nuevaPosicion: ' + nuevaPosicion);
-        posicionActual = nuevaPosicion;
+        return posicion;
     }
 
     function hayObstaculo(posicion) {
         for (let i = 0; i < obstaculos.length; i++) {
             if (posicion[0] == obstaculos[i][0]) {
                 if (posicion[1] == obstaculos[i][1]) {
-                    console.log('choco');
                     return true;
                 }
             }
