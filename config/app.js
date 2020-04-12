@@ -42,7 +42,7 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
     }
 
     //A diferencia de los obstaculos, aquí queda un array de el tipo de movimiento y la cantidad de pasos cuando se especifica 
-    for (let j = cantObstaculos.length + 1; j < arrayDatos.length; j++) {
+    for (let j = cantObstaculos + 1; j < arrayDatos.length; j++) {
         movimientos.push(arrayDatos[j].split(' '));
     }
 
@@ -146,4 +146,9 @@ fs.readFile(filePath, 'utf-8', function(err, data) {
     console.log('esta es la posicion final: ' + posicionActual);
     console.log('La distancia maxima alcanzada es: ' + calcularMaximaDistancia() + ' unidades');
 
+});
+
+
+app.listen(8080, function() {
+    console.log('Escuchando pedidos en el puerto 8000');
 });
