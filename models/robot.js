@@ -73,7 +73,7 @@ Robot.prototype.hayObstaculo = function(posicion, obstaculos) {
 }
 
 Robot.prototype.mayorDistancia = function() {
-
+    this.posicionMaxima = this.posicionInicial;
     let temporal = [];
     for (let i = 0; i < 2; i++) {
         if (this.posicionActual[i] < 0) {
