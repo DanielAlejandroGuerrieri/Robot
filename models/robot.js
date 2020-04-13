@@ -9,7 +9,7 @@ const direccion = {
 const Robot = function(posicionInicial) {
     this.posicionInicial = posicionInicial;
     this.posicionActual = this.posicionInicial;
-    this.posicionMaxima = [];
+    this.posicionMaxima = [0, 0];
     this.orientacion = direccion.norte;
 }
 
@@ -73,7 +73,6 @@ Robot.prototype.hayObstaculo = function(posicion, obstaculos) {
 }
 
 Robot.prototype.mayorDistancia = function() {
-    this.posicionMaxima = this.posicionInicial;
     let temporal = [];
     for (let i = 0; i < 2; i++) {
         if (this.posicionActual[i] < 0) {
