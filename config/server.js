@@ -13,7 +13,7 @@ app.get('/robot', function(req, res) {
         if (err) throw err;
         console.log('el contenido es: ' + data);
         let distancia = comandoControllers.iniciar(data);
-        res.send('La distancia maxima alcanzada por el robot con posicion inicial en [' + comandoControllers.robot.posicionInicial + '], es: ' + distancia);
+        res.send('<h1>La distancia maxima alcanzada por el robot con posicion inicial en [' + comandoControllers.robot.posicionInicial + '], es: ' + distancia + '</h1>');
     });
 });
 

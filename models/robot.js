@@ -9,7 +9,7 @@ const direccion = {
 const Robot = function(posicionInicial) {
     this.posicionInicial = posicionInicial;
     this.posicionActual = this.posicionInicial;
-    this.posicionMaxima = [0, 0];
+    this.posicionMaxima = [];
     this.orientacion = direccion.norte;
 }
 
