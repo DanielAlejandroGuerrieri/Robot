@@ -22,8 +22,10 @@ con ruta:'/robot'. Quedando así una pequeña API REST donde devuelve a la panta
 el resultado del calculo de máxima distancia. 
 
 Para ejecutar el archivo server.js, se debe ingresar a la ruta:
+
 >robot/config/node server.js
-Desde donde llama a un archivo 'robot/controllers/comandoController.js', quién realiza los pedidos y ejecuciones
+
+Desde donde llama el archivo 'robot/controllers/comandoController.js', quién realiza los pedidos y ejecuciones
 de modificaciones del modelo, que se encuentra en 'robot/models/robot.js'.
 El archivo robot.js, es el modelo realizado como una clase para ser llamado desde el controller y así
 mantener modularizado el proyecto.
